@@ -37,12 +37,12 @@
         "finalize": "",
         "libs": [
             {
-                "var": "workerThreads",
-                "module": "worker_threads"
-            },
-            {
                 "var": "workerpool",
                 "module": "workerpool"
+            },
+            {
+                "var": "workerThreads",
+                "module": "worker_threads"
             }
         ],
         "x": 480,

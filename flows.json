@@ -29,7 +29,7 @@
         "type": "function",
         "z": "999691d3bc673baf",
         "name": "function 1",
-        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\nawait sleep(222)\n\nmsg.payload = {resultOut: 1}\n\nreturn msg;",
+        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\nawait sleep(2000)\n\nmsg.payload = {resultOut: 1}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,

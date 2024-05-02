@@ -8,6 +8,19 @@
         "env": []
     },
     {
+        "id": "036f10b095cab58f",
+        "type": "log-elk-logger-chemical-ai",
+        "name": "",
+        "url": "http://localhost:9200",
+        "filename": "C:\\Users\\Bogdan\\.node-red\\log-elk.log",
+        "maxsize": "1",
+        "maxfiles": "2",
+        "logelk": false,
+        "logfile": true,
+        "logconsole": false,
+        "logdebug": false
+    },
+    {
         "id": "d2d315e3e7cbb974",
         "type": "http in",
         "z": "999691d3bc673baf",
@@ -49,7 +62,8 @@
         "y": 160,
         "wires": [
             [
-                "b235fbc35ea1698f"
+                "b235fbc35ea1698f",
+                "cda2c0c529129ad8"
             ]
         ]
     },
@@ -86,7 +100,7 @@
         "type": "function",
         "z": "999691d3bc673baf",
         "name": "function 2",
-        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\nawait sleep(30)\n\nmsg.payload = {resultOut: 1}\n\nreturn msg;",
+        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\nawait sleep(30)\n\nmsg.payload = {resultOut: 1}\nnode.log(\"info: \" + \"flow30\");\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -106,7 +120,8 @@
         "y": 320,
         "wires": [
             [
-                "275480375549617d"
+                "275480375549617d",
+                "cda2c0c529129ad8"
             ]
         ]
     },
@@ -143,7 +158,7 @@
         "type": "function",
         "z": "999691d3bc673baf",
         "name": "function 3",
-        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\n// blocks until IO works nuder the hood \nawait sleep(100)\n\nmsg.payload = {resultOut: 1}\n\nreturn msg;",
+        "func": "\nfunction sleep(ms) {\n    return new Promise((resolve) => {\n        setTimeout(resolve, ms);\n    });\n}\n\n// blocks until IO works nuder the hood \nawait sleep(100)\n\nmsg.payload = {resultOut: 1}\nnode.log(\"info to file: \" + msg);\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -163,7 +178,8 @@
         "y": 500,
         "wires": [
             [
-                "0f6e224a8f1d931d"
+                "0f6e224a8f1d931d",
+                "cda2c0c529129ad8"
             ]
         ]
     },
@@ -220,7 +236,8 @@
         "y": 660,
         "wires": [
             [
-                "b30ec6a0fd66f567"
+                "b30ec6a0fd66f567",
+                "cda2c0c529129ad8"
             ]
         ]
     },
@@ -404,6 +421,18 @@
         "headers": {},
         "x": 760,
         "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "cda2c0c529129ad8",
+        "type": "log-elk-chemical-ai",
+        "z": "999691d3bc673baf",
+        "name": "logger",
+        "logger": "036f10b095cab58f",
+        "complete": "payload",
+        "loglevel": "info",
+        "x": 1130,
+        "y": 40,
         "wires": []
     }
 ]

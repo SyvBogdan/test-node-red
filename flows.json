@@ -8,19 +8,6 @@
         "env": []
     },
     {
-        "id": "036f10b095cab58f",
-        "type": "log-elk-logger-chemical-ai",
-        "name": "",
-        "url": "http://localhost:9200",
-        "filename": "C:\\Users\\Bogdan\\.node-red\\log-elk.log",
-        "maxsize": "1",
-        "maxfiles": "2",
-        "logelk": false,
-        "logfile": true,
-        "logconsole": false,
-        "logdebug": false
-    },
-    {
         "id": "d2d315e3e7cbb974",
         "type": "http in",
         "z": "999691d3bc673baf",
@@ -418,5 +405,217 @@
         "x": 760,
         "y": 1080,
         "wires": []
+    },
+    {
+        "id": "76088fea1e3e3e66",
+        "type": "http in",
+        "z": "999691d3bc673baf",
+        "name": "pool_my_test_flow_heavy_task",
+        "url": "/pool/my_test_flow_heavy_task_transient",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 1200,
+        "wires": [
+            [
+                "4ea122fb00bb0602"
+            ]
+        ]
+    },
+    {
+        "id": "4ea122fb00bb0602",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 8",
+        "func": "const pool = global.get(\"globalWorkerPool\")\n// Define a heavy task function that performs a computation with input data\n// this operation do not block but performs long-run execution\nfunction heavyComputation(data) {\n    // Simulate a heavy computation\n    let result = 0;\n    for (let i = 0; i < 100000000; i++) {\n        result += 1;\n    }\n    return result;\n}\n\nasync function asyncCompute() {\n\n    return  pool\n        .exec(heavyComputation, [\"msg\"])\n        .then(async function init(input) {\n            return input;\n        });\n\n}\n\n//perform computation  // without blocking main thread to execute \nconst result = await asyncCompute()\n\n//const result = await heavyComputation()\n\nmsg.payload = { resultOut: result, poolVar: pool }\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "workerThreads",
+                "module": "worker_threads"
+            },
+            {
+                "var": "workerpool",
+                "module": "workerpool"
+            }
+        ],
+        "x": 480,
+        "y": 1200,
+        "wires": [
+            [
+                "88bafacb3040cd18"
+            ]
+        ]
+    },
+    {
+        "id": "98f9a6e65a1d2730",
+        "type": "http response",
+        "z": "999691d3bc673baf",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1080,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "88bafacb3040cd18",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 9",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "workerThreads",
+                "module": "worker_threads"
+            },
+            {
+                "var": "workerpool",
+                "module": "workerpool"
+            }
+        ],
+        "x": 680,
+        "y": 1200,
+        "wires": [
+            [
+                "f691263ff8831de5"
+            ]
+        ]
+    },
+    {
+        "id": "f691263ff8831de5",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 10",
+        "func": "\n msg.statusCode = 500;\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 1200,
+        "wires": [
+            [
+                "98f9a6e65a1d2730"
+            ]
+        ]
+    },
+    {
+        "id": "b21405885cf0205c",
+        "type": "http in",
+        "z": "999691d3bc673baf",
+        "name": "pool_my_test_flow_heavy_task2",
+        "url": "/pool/my_test_flow_heavy_task_transient2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 1340,
+        "wires": [
+            [
+                "4a06300d6d3f9eb8"
+            ]
+        ]
+    },
+    {
+        "id": "4a06300d6d3f9eb8",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 11",
+        "func": "const pool = global.get(\"globalWorkerPool\")\n// Define a heavy task function that performs a computation with input data\n// this operation do not block but performs long-run execution\nfunction heavyComputation(data) {\n    // Simulate a heavy computation\n    let result = 0;\n    for (let i = 0; i < 100000000; i++) {\n        result += 1;\n    }\n    return result;\n}\n\nasync function asyncCompute() {\n\n    return  pool\n        .exec(heavyComputation, [\"msg\"])\n        .then(async function init(input) {\n            return input;\n        });\n\n}\n\n//perform computation  // without blocking main thread to execute \nconst result = await asyncCompute()\n\n//const result = await heavyComputation()\n\nmsg.payload = { resultOut: result }\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "workerThreads",
+                "module": "worker_threads"
+            },
+            {
+                "var": "workerpool",
+                "module": "workerpool"
+            }
+        ],
+        "x": 490,
+        "y": 1340,
+        "wires": [
+            [
+                "fa81d6d65b963bdc"
+            ]
+        ]
+    },
+    {
+        "id": "cdf4263f06a418e9",
+        "type": "http response",
+        "z": "999691d3bc673baf",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1320,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "fa81d6d65b963bdc",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 12",
+        "func": "const dbPool = global.get(\"globalMysql2Pool\")\n\nconst connection = await dbPool.getConnection();\n\n\ntry {\n\n\n     await connection.beginTransaction();\n\n      const res = await connection.query('INSERT INTO PERSONS (LastName, FirstName) VALUES (?, ?)', ['John Doe', 'john@example.com']);\n      \n    \n     // await connection.commit();\n\n\n} catch (err) {\n        // Rollback the transaction in case of error\n        await connection.rollback();\n        await   connection.release();\n        msg.statusCode = 500;\n        console.error('Transaction failed, rolled back.', err);\n    } finally {\n        // Release the connection back to the pool\n      //  connection.release();\n    }\n\n\nmsg.connection = connection\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "workerThreads",
+                "module": "worker_threads"
+            },
+            {
+                "var": "workerpool",
+                "module": "workerpool"
+            }
+        ],
+        "x": 730,
+        "y": 1340,
+        "wires": [
+            [
+                "a136e9f22e177843"
+            ]
+        ]
+    },
+    {
+        "id": "a136e9f22e177843",
+        "type": "function",
+        "z": "999691d3bc673baf",
+        "name": "function 13",
+        "func": "\n// connection from first node \nconst connection = msg.connection;\n\n\ntry {\n\n      const res = await connection.query('INSERT INTO PERSONS (LastName, FirstName) VALUES (?, ?)', ['John Doe', 'john@example.com']);\n      \n      msg.statusCode = 500;\n      await connection.commit();\n\n\n} catch (err) {\n        // Rollback the transaction in case of error and free pool worker\n        await connection.rollback();\n        await connection.release();\n        console.error('Transaction failed, rolled back.', err);\n    } finally {\n        // Release the connection back to the pool\n       await connection.release();\n       msg.statusCode = 500;\n       node.log(\"finish\")\n    }\n\n\nmsg.connection = connection\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 1340,
+        "wires": [
+            [
+                "cdf4263f06a418e9"
+            ]
+        ]
     }
 ]

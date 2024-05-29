@@ -289,7 +289,7 @@ module.exports = {
     /** Configure the logging output */
     logging: {
         /** Only console logging is currently supported */
-        console: {
+       console: {
             /** Level of logging to be recorded. Options are:
              * fatal - only those errors which make the application unusable should be recorded
              * error - record errors which are deemed fatal for a particular request + fatal errors
@@ -304,7 +304,60 @@ module.exports = {
             metrics: false,
             /** Whether or not to include audit events in the log output */
             audit: false
+        },
+
+
+        myCustomLogger: {
+            level: "info",
+            handler: function(settings) {
+                var log4js = require("log4js");
+                log4js.configure({
+                    appenders: {
+                        everything: { type: 'file', filename: 'C:/Users/Bogdan/.node-red/node-red.log', daysToKeep: 7 }
+                    },
+                    categories: {
+                        default: { appenders: [ 'everything' ], level: 'all' }
+                    }
+                });
+                var logger = log4js.getLogger();
+
+                return function(msg) {
+                    var level='ALL'
+                    switch(msg.level) {
+                        case 10:
+                            var level="FATAL";
+                            break;
+                        case 20:
+                            var level="ERROR";
+                            break;
+                        case 30:
+                            var level="WARN";
+                            break;
+                        case 40:
+                            var level="INFO";
+                            break;
+                        case 50:
+                            var level="DEBUG";
+                            break;
+                        case 60:
+                            var level="TRACE";
+                            break;
+                    }
+                    var add_msg=""
+                    if (msg.type !== undefined) {
+                        if (msg.name !== undefined) {
+                            add_msg="[".concat(msg.type, ":", msg.name, "] ");
+                        } else {
+                            add_msg = "[".concat(msg.type, "] ");
+                        }
+                    } else if (msg.name !== undefined) {
+                        add_msg = "[".concat(msg.name, "] ");
+                    }
+                    logger.log(level, msg.msg);
+                }
+            }
         }
+
 
 /*        myCustomLogger: {
             level: 'info',
@@ -505,6 +558,34 @@ module.exports = {
             const workerpool = require('workerpool');
             //const pool = workerpool.pool();
             const pool = workerpool.pool({ minWorkers: 100, maxWorkers: 500, maxQueueSize: 10000 });
+
+            return pool;
+        })(),
+
+
+        globalMysqlPool: (() => {
+            var mysql = require('mysql');
+            var pool  = mysql.createPool({
+                connectionLimit : 50,
+                host            : 'localhost',
+                user            : 'root',
+                password        : '',
+                database        : 'DATA'
+            });
+
+            return pool;
+        })(),
+
+
+        globalMysql2Pool: (() => {
+            const mysql = require('mysql2/promise');
+            var pool  = mysql.createPool({
+                connectionLimit : 50,
+                host            : 'localhost',
+                user            : 'root',
+                password        : '',
+                database        : 'DATA'
+            });
 
             return pool;
         })(),

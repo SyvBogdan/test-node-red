@@ -305,6 +305,19 @@ module.exports = {
             /** Whether or not to include audit events in the log output */
             audit: false
         }
+
+/*        myCustomLogger: {
+            level: 'info',
+            metrics: true,
+            handler: function(settings) {
+                // Called when the logger is initialised
+
+                // Return the logging function
+                return function(msg) {
+                    console.log(msg.timestamp, msg.event);
+                }
+            }
+        }*/
     },
 
     /** Context Storage

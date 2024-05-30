@@ -304,8 +304,8 @@ module.exports = {
             metrics: false,
             /** Whether or not to include audit events in the log output */
             audit: false
-        },
-
+        }
+    },
 
     /** Context Storage
      * The following property can be used to enable context storage. The configuration
@@ -487,6 +487,7 @@ module.exports = {
 
         },
 
+
         globalWorkerPool: (() => {
             const workerpool = require('workerpool');
             //const pool = workerpool.pool();
@@ -494,6 +495,8 @@ module.exports = {
 
             return pool;
         })(),
+
+
 
        workers:  require('worker_threads'),
     },

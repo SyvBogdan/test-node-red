@@ -488,13 +488,13 @@ module.exports = {
         },
 
 
-        globalWorkerPool: 1, /* (() => {
+        globalWorkerPool: 1, (() => {
             const workerpool = require('workerpool');
             //const pool = workerpool.pool();
             const pool = workerpool.pool({ minWorkers: 100, maxWorkers: 500, maxQueueSize: 10000 });
 
             return pool;
-        })(),*/
+        })(),
 
 
 
